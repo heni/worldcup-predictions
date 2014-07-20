@@ -2,6 +2,21 @@
 import json
 import numpy as np
 
+class TeamInfo(object):
+    def __init__(self, teamname):
+        self.Name = teamname
+        self.RegCounters = {}
+
+    def CountRegion(self, region):
+        self.RegCounters[region] = self.RegCounters.get(region, 0) + 1
+    
+    def GetName(self):
+        return self.Name
+
+    def GetRegion(self):
+        return max(self.RegCounters, key=self.RegCounters.get)
+
+
 class TeamsData(object):
     
     def __init__(self, filename):
@@ -9,7 +24,7 @@ class TeamsData(object):
 
     def LoadData(self, filename):
         self.TeamsIndex = {}
-        self.RevTeamsIndex = {}
+        self.Teams = []
         self.Records = []
         with open(filename) as reader:
             for ln in reader:
@@ -23,15 +38,17 @@ class TeamsData(object):
     def GetTeamID(self, teamname, region=None):
         teamId = self.TeamsIndex.get(teamname, None)
         if teamId is None:
-            teamId = self.TeamsIndex[teamname] = len(self.TeamsIndex)
-            self.RevTeamsIndex[teamId] = teamname, region
+            teamId = self.TeamsIndex[teamname] = len(self.Teams)
+            self.Teams.append(TeamInfo(teamname))
+        if region:
+            self.Teams[teamId].CountRegion(region)
         return teamId
        
     def GetTeamName(self, teamId):
-        return self.RevTeamsIndex[teamId][0]
+        return self.Teams[teamId].GetName()
 
     def GetTeamRegion(self, teamId):
-        return self.RevTeamsIndex[teamId][1]
+        return self.Teams[teamId].GetRegion()
 
 
 def SolveModel(td):

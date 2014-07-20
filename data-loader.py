@@ -96,7 +96,13 @@ def LoadData(url):
                 pass
     return events
 
+
+def Process(url, outFile):
+    with open(outFile, "w") as res_pr:
+        for ev in LoadData(url):
+            print >>res_pr, json.dumps(ev)
+
 if __name__ == "__main__":
-    events = LoadData("http://www.rsssf.com/tables/2014q.html")
-    for ev in events:
-        print json.dumps(ev)
+    Process("http://www.rsssf.com/tables/2014q.html", "wc2014q-result.js")    
+    Process("http://www.rsssf.com/tables/2012e.html", "eu2012-result.js")
+

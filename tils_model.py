@@ -1,71 +1,30 @@
 #!/usr/bin/env python2.7
-import json
 import numpy as np
 
-class TeamInfo(object):
-    def __init__(self, teamname):
-        self.Name = teamname
-        self.RegCounters = {}
-
-    def CountRegion(self, region):
-        self.RegCounters[region] = self.RegCounters.get(region, 0) + 1
-    
-    def GetName(self):
-        return self.Name
-
-    def GetRegion(self):
-        return max(self.RegCounters, key=self.RegCounters.get)
-
-
-class TeamsData(object):
-    
-    def __init__(self, filename):
-        self.LoadData(filename)
-
-    def LoadData(self, filename):
-        self.TeamsIndex = {}
-        self.Teams = []
-        self.Records = []
-        with open(filename) as reader:
-            for ln in reader:
-                it = json.loads(ln)
-                self.Records.append((
-                    self.GetTeamID(it["team1"], it["region"]), 
-                    self.GetTeamID(it["team2"], it["region"]), 
-                    eval(it["orig-score"])
-                ))
-
-    def GetTeamID(self, teamname, region=None):
-        teamId = self.TeamsIndex.get(teamname, None)
-        if teamId is None:
-            teamId = self.TeamsIndex[teamname] = len(self.Teams)
-            self.Teams.append(TeamInfo(teamname))
-        if region:
-            self.Teams[teamId].CountRegion(region)
-        return teamId
-       
-    def GetTeamName(self, teamId):
-        return self.Teams[teamId].GetName()
-
-    def GetTeamRegion(self, teamId):
-        return self.Teams[teamId].GetRegion()
-
-
-def SolveModel(td):
+def MathModel(td):
     X = np.zeros(shape=(len(td.Records), len(td.TeamsIndex)))
     Y = np.zeros(shape=(len(td.Records), 1))
     for i, it in enumerate(td.Records):
         X[i][it[0]] = 1
         X[i][it[1]] = -1
         Y[i][0] = it[2]
-    X_ = np.linalg.pinv(np.mat(X))
-    r = X_ * np.mat(Y)
-    rLst = list(r.flat)
-    rank = sorted(xrange(len(rLst)), key=lambda i: rLst[i], reverse=True)
-    for i in rank:
-        print "{0}\t{1}\t{2}\t{3}".format(i, td.GetTeamName(i).encode("utf-8"), td.GetTeamRegion(i), rLst[i])
+    return np.mat(X), np.mat(Y)
 
 
-if __name__ == "__main__":
-    td = TeamsData("result.js")
-    SolveModel(td)
+def LearnPredictor(td):
+    X, Y = MathModel(td)
+    X_ = np.linalg.pinv(X)
+    r = X_ * Y
+    return r
+
+
+def RankTeams(model):
+    rLst = list(model.flat)
+    return sorted(xrange(len(rLst)), key=lambda i: rLst[i], reverse=True)
+
+
+def ApplyModel(model, td):
+    X, Y = MathModel(td)
+    predicts = X * model
+    return list(predicts.flat), list((predicts - Y).flat)
+

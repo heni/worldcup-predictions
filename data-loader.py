@@ -17,6 +17,8 @@ Reductions = {
     u"antigua/b.": u"antigua and barbuda",
     u"antigua/barb.": u"antigua and barbuda",
     u"herz.": u"herzegovina",
+    u"herzeg.": u"herzegovina",
+    u"bosnia & ": u"bosnia-",
     u"br.": u"british",
     u"brazz.": u"brazzaville",
     u"virgin i.": u"virgin islands",
@@ -36,8 +38,8 @@ Reductions = {
 }
 
 def NormalizeCoutryName(name):
-    _name = name.lower()
-    while "/" in _name or "." in _name:
+    _name = name.strip().lower()
+    while re.search("[\./&]", _name):
         avail_r = filter(lambda _f: _f in _name, Reductions)
         if not avail_r:
             raise RuntimeError(u"can't normalize country name: {0}".format(name).encode("utf-8"))
@@ -46,7 +48,7 @@ def NormalizeCoutryName(name):
     return _name
 
 
-def LoadData(url):
+def LoadData_wc2014q(url):
     events = []
     partIDS = ["Europe", "South America", "Africa", "Asia", "North/Central America", "Oceania"]
     doc = BeautifulSoup(urllib2.urlopen(url))
@@ -97,12 +99,57 @@ def LoadData(url):
     return events
 
 
-def Process(url, outFile):
+def ParseRest(restStr):
+    cmtRes = re.search("\[([^]]+)\]", restStr)
+    if cmtRes:
+        team = NormalizeCoutryName(restStr[:cmtRes.start()])
+        comment = re.findall("\[([^]]+)\]",restStr) 
+        if len(comment) == 1:
+            comment = comment[0]
+    else:
+        team = NormalizeCoutryName(restStr)
+        comment = None
+    return team, comment
+
+
+def LoadData_eu2012(url):
+    events = []
+    partIDS = ["Qualifying Stage", "Final Tournament"]
+    doc = BeautifulSoup(urllib2.urlopen(url))
+    for idx, part in enumerate(doc.select("pre")):
+        for ln in part.text.split("\n"):
+            if len(ln) >= 33 and (ln[2] == ln[6] == ln[11] == ln[28] == ln[32] == " ") and "[" not in ln[:33]:
+                date = ln[:11]
+                team1 = NormalizeCoutryName(ln[12:28])
+                scores = ln[29:32].strip().replace(u"\x96", "-")
+                team2, comment = ParseRest(ln[33:])
+                events.append({
+                    "region": "Europe",
+                    "stage": partIDS[idx],
+                    "team1": team1,
+                    "team2": team2,
+                    "orig-score": scores,
+                    "match-date": date,
+                    "comment": comment,
+                })
+            else:
+                #print ln.encode("utf-8")
+                pass
+    return events
+
+
+Loaders = {
+    "wc2014q": LoadData_wc2014q,
+    "eu2012": LoadData_eu2012,
+}
+
+def Process(url, outFile, fmt):
     with open(outFile, "w") as res_pr:
-        for ev in LoadData(url):
+        for ev in Loaders[fmt](url):
             print >>res_pr, json.dumps(ev)
 
+
 if __name__ == "__main__":
-    Process("http://www.rsssf.com/tables/2014q.html", "wc2014q-result.js")    
-    Process("http://www.rsssf.com/tables/2012e.html", "eu2012-result.js")
+    Process("http://www.rsssf.com/tables/2014q.html", "wc2014q-result.js", "wc2014q")
+    Process("http://www.rsssf.com/tables/2012e.html", "eu2012-result.js", "eu2012")
 

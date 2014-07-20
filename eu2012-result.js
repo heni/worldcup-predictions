@@ -123,7 +123,7 @@
 {"comment": null, "region": "Europe", "team1": "san marino", "team2": "netherlands", "orig-score": "0-5", "match-date": "03 Sep 2010", "stage": "Qualifying Stage"}
 {"comment": null, "region": "Europe", "team1": "sweden", "team2": "san marino", "orig-score": "6-0", "match-date": "07 Sep 2010", "stage": "Qualifying Stage"}
 {"comment": null, "region": "Europe", "team1": "hungary", "team2": "moldova", "orig-score": "2-1", "match-date": "07 Sep 2010", "stage": "Qualifying Stage"}
-{"comment": null, "region": "Europe", "team1": "netherlands", "team2": "finland'", "orig-score": "2-1", "match-date": "07 Sep 2010", "stage": "Qualifying Stage"}
+{"comment": null, "region": "Europe", "team1": "netherlands", "team2": "finland", "orig-score": "2-1", "match-date": "07 Sep 2010", "stage": "Qualifying Stage"}
 {"comment": null, "region": "Europe", "team1": "hungary", "team2": "san marino", "orig-score": "8-0", "match-date": "08 Oct 2010", "stage": "Qualifying Stage"}
 {"comment": null, "region": "Europe", "team1": "moldova", "team2": "netherlands", "orig-score": "0-1", "match-date": "08 Oct 2010", "stage": "Qualifying Stage"}
 {"comment": null, "region": "Europe", "team1": "finland", "team2": "hungary", "orig-score": "1-2", "match-date": "12 Oct 2010", "stage": "Qualifying Stage"}
@@ -174,7 +174,7 @@
 {"comment": null, "region": "Europe", "team1": "latvia", "team2": "greece", "orig-score": "1-1", "match-date": "06 Sep 2011", "stage": "Qualifying Stage"}
 {"comment": null, "region": "Europe", "team1": "latvia", "team2": "malta", "orig-score": "2-0", "match-date": "07 Oct 2011", "stage": "Qualifying Stage"}
 {"comment": null, "region": "Europe", "team1": "greece", "team2": "croatia", "orig-score": "2-0", "match-date": "07 Oct 2011", "stage": "Qualifying Stage"}
-{"comment": null, "region": "Europe", "team1": "gorgia", "team2": "greece", "orig-score": "1-2", "match-date": "11 Oct 2011", "stage": "Qualifying Stage"}
+{"comment": null, "region": "Europe", "team1": "georgia", "team2": "greece", "orig-score": "1-2", "match-date": "11 Oct 2011", "stage": "Qualifying Stage"}
 {"comment": null, "region": "Europe", "team1": "malta", "team2": "israel", "orig-score": "0-2", "match-date": "11 Oct 2011", "stage": "Qualifying Stage"}
 {"comment": null, "region": "Europe", "team1": "croatia", "team2": "latvia", "orig-score": "2-0", "match-date": "11 Oct 2011", "stage": "Qualifying Stage"}
 {"comment": null, "region": "Europe", "team1": "montenegro", "team2": "wales", "orig-score": "1-0", "match-date": "03 Sep 2010", "stage": "Qualifying Stage"}

@@ -20,12 +20,12 @@ class TeamInfo(object):
 class TeamsData(object):
     
     def __init__(self, filename):
-        self.LoadData(filename)
-
-    def LoadData(self, filename):
         self.TeamsIndex = {}
         self.Teams = []
         self.Records = []
+        self.UpdateData(filename)
+
+    def UpdateData(self, filename):
         with open(filename) as reader:
             for ln in reader:
                 it = json.loads(ln)
@@ -57,9 +57,16 @@ def ShowErrors(err):
     plt.show()
 
 
+def PrintRanks(alg, model, td):
+    for tId in alg.RankTeams(model):
+        print u"{0}\t{1}\t{2}\t{3}".format(tId, td.GetTeamName(tId), td.GetTeamRegion(tId), next(model[tId].flat)).encode("utf-8")
+
+
 if __name__ == "__main__":
-    td = TeamsData("wc2014q-result.js")
+    td = TeamsData("eu2012-result.js")
+    td.UpdateData("wc2014q-result.js")
     model = tils_model.LearnPredictor(td)
-    predicts, err = tils_model.ApplyModel(model, td)
-    ShowErrors(err)
+    PrintRanks(tils_model, model, td)
+    #predicts, err = tils_model.ApplyModel(model, td)
+    #ShowErrors(err)
     

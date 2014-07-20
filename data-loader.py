@@ -150,6 +150,7 @@ def Process(url, outFile, fmt):
 
 
 if __name__ == "__main__":
-    Process("http://www.rsssf.com/tables/2014q.html", "wc2014q-result.js", "wc2014q")
-    Process("http://www.rsssf.com/tables/2012e.html", "eu2012-result.js", "eu2012")
+    pass
+    #Process("http://www.rsssf.com/tables/2014q.html", "wc2014q-result.js", "wc2014q")
+    #Process("http://www.rsssf.com/tables/2012e.html", "eu2012-result.js", "eu2012")
 

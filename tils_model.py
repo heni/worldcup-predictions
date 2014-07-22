@@ -7,7 +7,7 @@ def MathModel(td):
     for i, it in enumerate(td.Records):
         X[i][it[0]] = 1
         X[i][it[1]] = -1
-        Y[i][0] = it[2]
+        Y[i][0] = it[2] - it[3]
     return np.mat(X), np.mat(Y)
 
 

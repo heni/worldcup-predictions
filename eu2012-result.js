@@ -223,7 +223,7 @@
 {"comment": null, "region": "Europe", "team1": "scotland", "team2": "liechtenstein", "orig-score": "2-1", "match-date": "07 Sep 2010", "stage": "Qualifying Stage"}
 {"comment": null, "region": "Europe", "team1": "czech republic", "team2": "scotland", "orig-score": "1-0", "match-date": "08 Oct 2010", "stage": "Qualifying Stage"}
 {"comment": null, "region": "Europe", "team1": "spain", "team2": "lithuania", "orig-score": "3-1", "match-date": "08 Oct 2010", "stage": "Qualifying Stage"}
-{"comment": null, "region": "Europe", "team1": "liechtenstein", "team2": "czech", "orig-score": "0-2", "match-date": "12 Oct 2010", "stage": "Qualifying Stage"}
+{"comment": null, "region": "Europe", "team1": "liechtenstein", "team2": "czech republic", "orig-score": "0-2", "match-date": "12 Oct 2010", "stage": "Qualifying Stage"}
 {"comment": null, "region": "Europe", "team1": "scotland", "team2": "spain", "orig-score": "2-3", "match-date": "12 Oct 2010", "stage": "Qualifying Stage"}
 {"comment": null, "region": "Europe", "team1": "spain", "team2": "czech republic", "orig-score": "2-1", "match-date": "25 Mar 2011", "stage": "Qualifying Stage"}
 {"comment": null, "region": "Europe", "team1": "czech republic", "team2": "liechtenstein", "orig-score": "2-0", "match-date": "29 Mar 2011", "stage": "Qualifying Stage"}

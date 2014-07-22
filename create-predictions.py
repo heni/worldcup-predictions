@@ -1,6 +1,7 @@
 #!/usr/bin/env python2.7
 import json
-import tils_model
+import re
+import tils_model, tipr_model
 
 class TeamInfo(object):
     def __init__(self, teamname):
@@ -29,10 +30,11 @@ class TeamsData(object):
         with open(filename) as reader:
             for ln in reader:
                 it = json.loads(ln)
+                g1, g2 = map(int, re.findall("\d+", it["orig-score"]))
                 self.Records.append((
                     self.GetTeamID(it["team1"], it["region"]), 
                     self.GetTeamID(it["team2"], it["region"]), 
-                    eval(it["orig-score"])
+                    g1, g2,
                 ))
 
     def GetTeamID(self, teamname, region=None):
@@ -63,10 +65,11 @@ def PrintRanks(alg, model, td):
 
 
 if __name__ == "__main__":
-    td = TeamsData("eu2012-result.js")
-    td.UpdateData("wc2014q-result.js")
-    model = tils_model.LearnPredictor(td)
-    PrintRanks(tils_model, model, td)
+    #td = TeamsData("eu2012-result.js")
+    #td.UpdateData("wc2014q-result.js")
+    td = TeamsData("wc2014q-result.js")
+    model = tipr_model.LearnPredictor(td)
+    #PrintRanks(tils_model, model, td)
     #predicts, err = tils_model.ApplyModel(model, td)
     #ShowErrors(err)
     
